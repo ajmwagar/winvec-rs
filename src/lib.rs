@@ -1,4 +1,4 @@
-use std::time::{Duration, Instant};
+use std::{iter::FromIterator, time::{Duration, Instant}};
 
 /// Windowed Vector
 ///
@@ -10,6 +10,7 @@ use std::time::{Duration, Instant};
 /// You can specify the duration via `with_duration()`.
 /// Add elements with `push` or `push_with_timestamp`.
 /// View elements via `iter` and `into_iter`
+#[derive(Clone)]
 pub struct WinVec<T>(Vec<(Instant, T)>, Duration);
 
 impl <'a, T> WinVec<T> {
@@ -26,6 +27,17 @@ impl <'a, T> WinVec<T> {
     /// Push an element with a specified timestamp
     pub fn push_with_timestamp(&mut self, el: T, instant: Instant) {
         self.0.push((instant, el));
+    }
+
+    pub fn from_vec(vec: Vec<T>, dur: Duration) -> Self {
+        let instant = Instant::now();
+        let internal_vec = vec.into_iter().map(|el| (instant, el)).collect::<Vec<_>>();
+
+        WinVec(internal_vec, dur)
+    }
+
+    pub fn duration(&self) -> Duration {
+        self.1
     }
 }
 
