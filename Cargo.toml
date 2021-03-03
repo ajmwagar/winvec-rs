@@ -1,6 +1,6 @@
 [package]
 name = "winvec"
-version = "0.1.1"
+version = "0.2.0"
 authors = ["Avery Wagar <ajmw.subs@gmail.com>"]
 repository = "https://github.com/ajmwagar/winvec-rs"
 description = "Windowed Vector (TTL) Collection for Rust"
